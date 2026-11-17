@@ -1,0 +1,114 @@
+/* Red marks selection, focus, and the route into the full library. */
+.console { --library-red: #ff4e5e; }
+.console .backdrop img {
+  opacity: .56;
+  filter: saturate(.93);
+}
+.console .backdrop-wash {
+  background: linear-gradient(180deg, #101012ee, #10101236 44%, #101012 96%),
+              linear-gradient(90deg, #101012b0, transparent 86%);
+}
+.console .game-card.selected .cover-wrap {
+  border-color: #ff6473;
+  box-shadow: 0 16px 28px #0009, 0 0 20px #ff304018;
+}
+.console .game-card.selected::after {
+  background: var(--library-red);
+  animation: selection-mark 280ms var(--shelf-ease) both;
+}
+.console #openLibrary { margin-left: auto; color: #fff; }
+.console #menuButton { margin-left: 0; }
+.console #openLibrary kbd { color: #ffb7bd; border-color: #ff4e5e88; }
+.console #openLibrary:hover { color: #ffb7bd; }
+.console.library-open { display: block; padding: 0; min-height: 0; }
+.console.library-open > :not(.library-view) { display: none; }
+.library-view {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #111113;
+  color: #f1f0ee;
+  animation: library-in 260ms var(--shelf-ease) both;
+}
+.library-heading {
+  padding: 24px var(--shelf-edge) 20px;
+  border-bottom: 1px solid #ffffff1a;
+  background: #151517;
+}
+.library-back { padding: 4px 0; color: #d4d2d4; }
+.library-back kbd { margin-right: 8px; }
+.library-view h1 {
+  margin: 12px 0 16px;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 600;
+  line-height: 1;
+  text-shadow: none;
+}
+.library-tools {
+  display: grid;
+  grid-template-columns: minmax(0, 480px) auto;
+  gap: 8px 16px;
+  align-items: center;
+  color: #b8b5ba;
+}
+.library-tools label { grid-column: 1 / -1; font-size: 12px; }
+.library-tools input { width: 100%; min-height: 44px; background: #1c1c1f; }
+.library-tools input:focus { outline: 1px solid var(--library-red); outline-offset: 0; }
+#libraryCount { justify-self: end; font-variant-numeric: tabular-nums; font-size: 13px; }
+.library-results { min-height: 0; flex: 1; overflow-y: auto; padding: 24px var(--shelf-edge) 40px; }
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(148px, 100%), 1fr));
+  gap: 24px 20px;
+}
+.library-card {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-width: 0;
+  padding: 0;
+  text-align: left;
+  border-radius: 10px;
+}
+.library-card:focus-visible { outline: none; }
+.library-cover {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: #212124;
+  border: 1px solid #ffffff24;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px #0003;
+  transition: transform 180ms var(--shelf-ease), border-color 180ms var(--shelf-ease);
+}
+.library-cover img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.library-card:is(:hover,:focus-visible) .library-cover {
+  transform: translateY(-3px);
+  border-color: var(--library-red);
+}
+.library-card:focus-visible .library-cover { outline: 2px solid var(--library-red); outline-offset: 3px; }
+.library-name { margin-top: 4px; font-size: 14px; font-weight: 600; line-height: 1.35; }
+.library-meta { font-size: 12px; color: #aaa7ad; }
+.artwork-link { display: inline-block; color: inherit; text-decoration: none; }
+#modal .example-art { height: auto; max-height: 38svh; object-fit: contain; background: #0d0d10; }
+.loading-mark { animation: none; filter: none; }
+#loadingCover { animation: none; filter: brightness(.24); }
+#overlayCover { filter: brightness(.24); }
+dialog, dialog::backdrop { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+@keyframes library-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes selection-mark {
+  from { opacity: 0; transform: scaleX(.35); }
+  to { opacity: 1; transform: scaleX(1); }
+}
+@media (max-width: 880px) {
+  .console .control-hint { display: none; }
+}
+@media (max-width: 540px) {
+  .library-heading { padding-block: 16px; }
+  .library-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 16px; }
+  .console .console-controls { gap: 12px; }
+}

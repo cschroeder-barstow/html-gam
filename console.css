@@ -1,0 +1,194 @@
+/* Home and launch share the same ink-black surfaces and red case marker. */
+.console {
+  --deck-red: #ff4456;
+  --deck-edge: clamp(24px, 6vw, 96px);
+  --deck-line: #eee8ea26;
+  --deck-ink: #0b0b0e;
+  --deck-text: #f6f2f2;
+  --deck-muted: #b6b0b3;
+  --shelf-edge: var(--deck-edge);
+  background: var(--deck-ink);
+  grid-template-rows: minmax(0, auto) minmax(0, 1fr) auto;
+  padding-block: clamp(60px, 11svh, 104px) clamp(12px, 3svh, 32px);
+}
+
+.console .backdrop { background: var(--deck-ink); }
+.console .backdrop .backdrop-art {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  object-position: center 48%;
+  filter: saturate(1.03);
+  transform: scale(1.04);
+  transition: opacity 460ms var(--shelf-ease), transform 700ms var(--shelf-ease);
+}
+.console .backdrop .backdrop-art.is-current { opacity: .68; transform: scale(1); }
+.console .backdrop-wash {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #08080c 4%, #08080c91 24%, #08080c26 64%, #08080c98),
+              linear-gradient(100deg, #09090de0, #09090d28 76%);
+}
+
+.console .brand { left: var(--deck-edge); top: clamp(12px, 3.3svh, 36px); }
+.console .brand img { width: 32px; height: 32px; }
+.console .game-information h1 {
+  max-width: 100%;
+  width: fit-content;
+  font-size: clamp(30px, min(6.2vw, 9svh), 88px);
+  font-weight: 700;
+  line-height: .98;
+  letter-spacing: -.014em;
+  text-wrap: balance;
+  text-shadow: 0 4px 28px #05050790;
+}
+.console .game-information h1.title-enter { animation: title-cut 360ms var(--shelf-ease) both; }
+.console .shelf-viewport { perspective-origin: 50% 55%; }
+.console .game-grid {
+  gap: clamp(20px, 2.8vw, 48px);
+  padding-block: clamp(12px, 3svh, 28px) clamp(24px, 5svh, 52px);
+  transition-duration: 490ms;
+}
+.console .game-card {
+  width: min(19vw, 32svh);
+  border-radius: 10px;
+  transform: perspective(1000px) rotateY(var(--tilt, 0deg)) scale(.94);
+  transition-duration: 490ms;
+}
+.console .cover-wrap {
+  display: block;
+  border-radius: 10px;
+  position: relative;
+  box-shadow: 0 14px 26px #0007;
+}
+.console .game-card::before {
+  border-radius: 8px;
+  background: #363036;
+  box-shadow: 0 12px 32px #0009;
+}
+.console .game-card.selected { transform: scale(1.1); }
+.console .game-card.selected .cover-wrap {
+  border-color: #ff6472;
+  box-shadow: 0 0 0 2px #ff445627, 0 20px 42px #000a;
+}
+.console .game-card.selected .cover-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 30%, #fff3 49%, transparent 68%);
+  animation: case-sweep 630ms var(--shelf-ease) both;
+}
+.console .game-card.selected::after {
+  width: 40px;
+  height: 3px;
+  left: calc(50% - 20px);
+  bottom: -16px;
+  background: var(--deck-red);
+}
+.console .game-card:focus-visible .cover-wrap { outline-color: #fff; outline-offset: 5px; }
+.console .pro-tag { background: #130f13ee; color: #f4dce0; }
+
+.console .console-controls {
+  justify-content: space-between;
+  border-color: var(--deck-line);
+  padding-block: 12px 0;
+  gap: 16px;
+}
+.console-actions { display: flex; gap: clamp(4px, 1.6vw, 24px); align-items: center; }
+.console .console-controls button {
+  font-size: 13px;
+  min-height: 36px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color 140ms, background-color 140ms, transform 140ms;
+}
+.console .console-controls button:hover { background: #ffffff12; }
+.console .console-controls button:active { transform: translateY(1px); }
+.console .console-controls #collectionButton { padding-inline-start: 0; color: var(--deck-muted); }
+.console .console-controls .shelf-play {
+  color: #fff4f5;
+  background: #aa2033;
+  min-width: 88px;
+  justify-content: center;
+  padding-inline: 12px;
+}
+.console .console-controls .shelf-play:hover { background: #bd293d; }
+.console .console-controls #openLibrary { margin: 0; }
+.console .console-controls .shelf-play kbd { border-color: #ffffff6b; }
+
+.library-view h1 { letter-spacing: -.016em; }
+.library-card:is(:hover, :focus-visible) .library-cover { box-shadow: 0 10px 28px #0009; }
+.system-menu .menu-list button:hover { background: #ff445619; }
+.system-menu .menu-list button.active { box-shadow: inset 2px 0 #ff4456; }
+
+/* The launch card is revealed once. Only the progress stroke loops while loading. */
+#gameLoading { background: #08080b; transition: opacity .3s ease; }
+#loadingCover { filter: brightness(.26) saturate(.9); }
+.loading-scene {
+  z-index: 1;
+  width: min(76vw, 840px);
+  display: grid;
+  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(28px, 6vw, 80px);
+  animation: launch-in 480ms cubic-bezier(.22, 1, .36, 1) both;
+}
+.loading-poster {
+  width: 100%;
+  display: block;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #ff6472;
+  box-shadow: 0 20px 64px #000a;
+}
+.loading-copy { text-align: left; }
+.loading-copy .loading-mark { width: 36px; display: block; }
+.loading-copy #loadingTitle { margin: 16px 0 24px; line-height: 1; }
+.loading-copy .loading-track { width: min(100%, 240px); height: 3px; }
+#gameLoading .loading-copy #loadStatus { padding: 0; text-align: left; color: #e1dce0; }
+.loading-copy #cancelLoading { padding-inline: 0; color: #e1dce0; }
+.loading-copy #cancelLoading:hover { color: #fff; text-decoration: underline; }
+#overlayCover { filter: brightness(.25); }
+#gameOverlay .overlay-content h2 { margin-bottom: 16px; }
+#gameOverlay #resumeGame { background: #aa2033; color: #fff; }
+
+@keyframes title-cut {
+  from { opacity: .25; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes case-sweep {
+  from { transform: translateX(-105%); opacity: .65; }
+  to { transform: translateX(105%); opacity: 0; }
+}
+@keyframes launch-in {
+  from { opacity: 0; transform: translateY(12px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (max-width: 760px) {
+  .console .game-card { width: min(58vw, 34svh); }
+  .console .console-controls { gap: 8px; }
+  .console .console-controls button { font-size: 12px; gap: 4px; padding-inline: 4px; }
+  .console .console-controls .shelf-play { min-width: 48px; padding-inline: 8px; }
+  .console-actions kbd { display: none; }
+}
+@media (max-height: 500px) {
+  .console { padding-block: 44px 8px; }
+  .console .brand { top: 8px; }
+  .console .brand img { width: 26px; height: 26px; }
+  .console .game-information h1 { font-size: clamp(26px, 8svh, 42px); }
+  .console .game-card { width: min(22vw, 30svh); }
+  .console .game-grid { padding-block: 12px 20px; }
+  .console .console-controls { padding-top: 4px; }
+  .loading-scene { grid-template-columns: min(30svh, 170px) minmax(0, 1fr); }
+}
+@media (max-width: 540px) and (min-height: 501px) {
+  .loading-scene { width: 82vw; grid-template-columns: 1fr; gap: 20px; justify-items: center; }
+  .loading-poster { width: min(42vw, 180px); }
+  .loading-copy { width: min(100%, 320px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .console .game-card.selected .cover-wrap::after { display: none; }
+}
+body.reduce-motion .console .game-card.selected .cover-wrap::after { display: none; }

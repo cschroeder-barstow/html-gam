@@ -1,0 +1,40 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AFTERPLAY</title><link rel="icon" href="assets/mark.svg"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="library.css"><link rel="stylesheet" href="console.css"><script defer src="catalog.js"></script><script defer src="ads.js"></script><script defer src="app.js"></script></head><body>
+<main class="console"><div class="backdrop" aria-hidden="true"><img class="backdrop-art is-current" alt=""><img class="backdrop-art" alt=""><div class="backdrop-wash"></div></div>
+<button class="brand" id="systemButton" aria-label="Open console menu"><img src="assets/mark.svg" alt=""><span>AFTERPLAY</span></button>
+<div class="game-information"><h1 id="gameTitle" aria-live="polite"></h1></div>
+<section class="shelf" aria-label="Game shelf"><div class="shelf-viewport"><div id="games" class="game-grid"></div></div><p id="empty" hidden>No games in this collection.</p></section>
+<div class="console-controls">
+  <button id="collectionButton" aria-label="Switch between all games and favorites"><span id="collectionName">All games</span></button>
+  <div class="console-actions">
+    <button id="play" class="shelf-play"><kbd>Enter</kbd> Play</button>
+    <button id="openLibrary"><kbd>L</kbd> Library</button>
+    <button id="menuButton"><kbd>Esc</kbd> Menu</button>
+  </div>
+</div>
+<section id="libraryView" class="library-view" hidden aria-labelledby="libraryTitle">
+  <div class="library-heading">
+    <button id="backHome" class="library-back"><kbd>Esc</kbd> Home</button>
+    <h1 id="libraryTitle">Game library</h1>
+    <div class="library-tools">
+      <label for="librarySearch">Search games</label>
+      <input id="librarySearch" type="search" placeholder="Title or genre" autocomplete="off">
+      <span id="libraryCount" role="status"></span>
+    </div>
+  </div>
+  <div class="library-results" id="libraryResults">
+    <div class="library-grid" id="libraryGrid"></div>
+    <p id="libraryEmpty" hidden>No games match your search.</p>
+  </div>
+</section></main>
+<dialog id="systemMenu" class="system-menu"><button id="closeSystem" class="close" aria-label="Close console menu">×</button><div class="menu-brand"><img src="assets/mark.svg" alt="">AFTERPLAY</div><div class="menu-list"><button data-tab="home" class="active">All games</button><button data-tab="favorites">Favorites</button><button id="menuLibrary">Game library <kbd>L</kbd></button><button id="details">Game details <kbd>I</kbd></button><button id="favorite">Add to favorites <kbd>S</kbd></button><button id="searchToggle">Search shelf</button><button id="fullscreen">Fullscreen</button><button id="settings">Settings</button><button id="pro">AFTERPLAY Pro <small>Coming soon</small></button></div><label id="searchBox" hidden><span class="sr-only">Search games</span><input id="search" type="search" placeholder="Search games"></label><button id="filter" class="quiet">All games</button></dialog>
+<dialog id="modal"><button class="close" aria-label="Close dialog">×</button><div id="modalContent"></div></dialog>
+<section id="player" hidden aria-label="Game player"><div id="frameMount"></div><div id="gameLoading"><img id="loadingCover" alt=""><div class="loading-scene">
+  <img id="loadingPoster" class="loading-poster" alt="">
+  <div class="loading-copy">
+    <img class="loading-mark" src="assets/mark.svg" alt="">
+    <h2 id="loadingTitle"></h2>
+    <div class="loading-track" aria-hidden="true"><i></i></div>
+    <p id="loadStatus" role="status">Opening game</p>
+    <button id="cancelLoading">Cancel</button>
+  </div>
+</div></div><button id="touchOverlay" aria-label="Open game overlay">Menu</button></section><dialog id="gameOverlay"><img id="overlayCover" alt=""><div class="overlay-content"><h2 id="playingTitle"></h2><button id="resumeGame" class="primary">Resume</button><button id="restartGame" class="secondary">Restart game</button><button id="playerFullscreen" class="secondary">Fullscreen</button><button id="exitGame" class="secondary">Exit to shelf</button><small>Esc / Shift + Tab to resume</small></div></dialog><div id="toast" role="status"></div></body></html>
